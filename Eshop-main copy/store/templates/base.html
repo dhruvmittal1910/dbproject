@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <title>E-commerce Website</title>
+
+  <style>
+    
+    nav {
+      background-image: linear-gradient(to bottom right, rgb(27, 69, 219), rgb(0, 255, 255));
+    }
+
+    .one-edge-shadow {
+      box-shadow: 0 8px 2px -5px rgb(246, 245, 245);
+    }
+
+    .display-8 {
+      font-weight: 200;
+      font-size: 30px;
+      font-colour: $teal-200;
+    }
+    .sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+.plus{
+  background-color: #259dde;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  background-color: white; 
+  color: black; 
+  border: 2px solid #259dde;
+}
+.plusone{
+  
+}
+  </style>
+</head>
+
+<body>
+  <!-- navbar -->
+
+  <nav class="one-edge-shadow
+  navbar navbar-light
+  sticky-top navbar 
+  navbar-expand-lg
+  text-white">
+    <a class="navbar-brand ms-3 text-dark " href="/">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+      <img src="/Eshop-main/store/templates/logocart.jpeg"
+        style="width:50px;height:50px;"><b style="text-shadow: 2px 2px grey;">EASEBUY</b>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <a href="/" >All Products</a>
+          {% for category in categories %}
+          <a href="/?category={{category.id}}"
+           >{{category.name}}</a>
+          {% endfor %}
+    </div>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li id="mySidenav" class="nav-item active ">
+          <!-- <span  onclick="openNav()">&#9776; CATEGORIES</span> -->
+          <span style="font-size:20px;cursor:pointer;text-shadow: 2px 2px grey;" class="nav-link" onclick="openNav()" href="/store"><b>CATEGORIES</b></span>
+        </li>
+
+      </ul>
+
+
+
+
+      <ul class=" navbar-nav my-2 my-lg-0">
+
+        <li class="nav-item active">
+          <a class="nav-link" style="text-shadow: 1px 1px grey;" href="/cart"><b>CART</b>
+            <span class="badge badge-success">{{request.session.cart.keys|length}}</span>
+            <span class="sr-only">(current)</span></a>
+        </li>
+
+        {% if request.session.customer %}
+
+        <li class="nav-item active ">
+          <a class="nav-link" style="text-shadow: 1px 1px grey;" href="/orders"><b>ORDERS</b><span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active ">
+          <a class="nav-link" style="text-shadow: 1px 1px grey;" href="/logout"><b>LOGOUT</b><span class="sr-only">(current)</span></a>
+        </li>
+        {% else %}
+
+        <li class="nav-item active">
+          <a class="nav-link" style="text-shadow: 1px 1px grey;" href="/signup"><b>SIGNUP</b><span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" style="text-shadow: 1px 1px grey;" href="/login"><b>LOGIN</b>><span class="sr-only">(current)</span></a>
+        </li>
+        {% endif %}
+
+
+      </ul>
+
+
+    </div>
+  </nav>
+  <!---->
+  {% block content %}{% endblock %}
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script>
+    function openNav() {
+      document.getElementById("mySidenav").style.width = "250px";
+    }
+    
+    function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+    }
+    </script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
